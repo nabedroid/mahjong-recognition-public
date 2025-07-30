@@ -1,0 +1,27 @@
+services:
+  yolo:
+    build:
+      context: .
+      dockerfile: docker/yolo/Dockerfile
+    container_name: yolo-container
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - ./src:/work/src
+      # カスタムした augment.py を ultralytics パッケージに上書きする
+      - ./src/yolo/augment.py:/usr/local/lib/python3.10/dist-packages/ultralytics/data/augment.py
+      - ./data:/work/data
+      - ./docker/yolo/dataset.yaml:/work/dataset.yaml
+    tty: true
+    stdin_open: true
+    shm_size: '2gb'
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]

@@ -1,0 +1,22 @@
+# Dockerビルド時に無視するファイルやディレクトリ
+
+# Gitリポジトリと関連ファイル
+.git
+.gitignore
+
+# IDE/エディタ設定
+.vscode/
+.idea/
+
+# Pythonキャッシュファイル
+__pycache__/
+*.pyc
+
+# マウントするディレクトリ
+src/
+data/
+
+# その他
+tmp/
+README.md
+test.py
